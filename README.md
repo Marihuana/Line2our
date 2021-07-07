@@ -1,6 +1,7 @@
-#Line2our (가제)
-
-###Package 구조
+# Line2our (가제)
+지하철을 중심으로 하는 서울 여행 정보 제공 
+---
+### Package 구조
 - 도메인 중심으로 생성
 ```
 └──   com
@@ -26,6 +27,6 @@
                               │                       └── TestService.kt
                               └──   util
 ```
---
+---
 
-###API 명세
+### API 명세

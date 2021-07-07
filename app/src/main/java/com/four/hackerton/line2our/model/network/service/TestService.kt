@@ -1,6 +1,7 @@
 package com.four.hackerton.line2our.model.network.service
 
 import com.four.hackerton.line2our.model.network.model.SearchResult
+import io.reactivex.rxjava3.core.Single
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -10,12 +11,17 @@ interface TestService {
      */
     @GET("/v2/search/web")
     fun getSearchListOnWeb(@Query("query") keyWord : String, @Query("sort") sort : String, @Query("page") page : Int, @Query("size") size : Int) : Call<SearchResult>
+    /**
+     * Get 방식에선 다음과 같이 선언
+     */
+    @GET("/v2/search/web")
+    fun getSearchListRx(@Query("query") keyWord : String, @Query("sort") sort : String, @Query("page") page : Int, @Query("size") size : Int) : Single<SearchResult>
 
     /**
      *  이렇게도 사용가능
      */
     @GET("/v2/search/web")
-    fun getSearchListOnWeb(@QueryMap query : Map<String, String>)
+    fun getSearchListRx(@QueryMap query : Map<String, String>) : Single<SearchResult>
 
     /**
      * Post 방식으로 사용할 때

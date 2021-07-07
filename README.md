@@ -50,3 +50,7 @@
 ---
 
 ### API 명세
+
+slack 테스트
+
+                              │               │       └── SearchResult.kt

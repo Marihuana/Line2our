@@ -9,7 +9,7 @@
                     └──   line2our
                               ├──   feature
                               │   ├──   common
-                              │   │   └──   CircleImageView.kt
+                              │   │   └──   BaseActivity.kt
                               │   └──   main
                               │       ├──   MainActivity.kt
                               │       └──   MainViewModel.kt

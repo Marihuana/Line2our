@@ -5,19 +5,21 @@ import com.four.hackerton.line2our.global.RemoteConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
     private var instance : Retrofit? = null
-    const val TIMEOUT_CONNECT = 60L
-    const val TIMEOUT_READ = 60L
+    private const val TIMEOUT_CONNECT = 60L
+    private const val TIMEOUT_READ = 60L
 
    fun getInstance() : Retrofit{
        if(instance == null) {
            instance = Retrofit.Builder()
                .baseUrl(RemoteConfig.BASE_URL)                              //api 통신을 할 도메인
                .addConverterFactory(GsonConverterFactory.create())          //reponse 값을 json으로
+               .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                .client(createClient())
                .build()
        }

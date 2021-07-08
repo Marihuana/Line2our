@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import com.four.hackerton.line2our.R
 import com.four.hackerton.line2our.feature.common.BaseActivity
+import com.four.hackerton.line2our.model.network.repository.KakaoRepository
 import com.four.hackerton.line2our.model.network.repository.TestRepository
 
 
@@ -16,17 +17,40 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
 
         //이렇게 get 방식의 경우 query를 post 방식의 경우 parameter를 map 형태로 넣고 lamda로 Result를 받게 짜놨어요
-        repository.searchOnRx(
+        repository.login(
             mapOf(
-                Pair("query", "해커톤"),
-                Pair("sort", "accuracy"),
-                Pair("page", "1"),
-                Pair("size", "20"))
+                Pair("email", "test@naver.com"),
+                Pair("password", "1234"))
         ){
             //여기서 성공여부 확인하시면 됩니다.
             if(it.isSuccess){
-                for(document in it.getOrNull()?.documents ?: arrayListOf()){
-                    Log.d(tag, "result (title : ${document.title}, url : ${document.url}, content : ${document.contents}")
+                it.getOrNull()?.let { response ->
+                    when(response.result){
+                        "0000" -> {
+                            var user = response.data!!.user
+                            var token = response.data!!.token
+                            Log.d(tag, "result (email : ${user.email}, token : ${token.accesToken}")
+                        }
+                        else -> { }
+                    }
+                }
+            }else{
+                //실패시 실패 처리 하는 함수 만드셔서 토스트 처리해도 되고 기획이 따로 있으면 기획에 따라가면 됩니다.
+                processError(it.exceptionOrNull())
+            }
+        }
+
+        var kakao = KakaoRepository()
+        kakao.searchPlace(
+            KakaoRepository.ParametersBuilder().apply {
+                this.keyword = "스타벅스"
+            }.build()
+        ){
+            if(it.isSuccess){
+                it.getOrNull()?.let { response ->
+                    for(place in response.places){
+                        Log.d(tag, "result (name : ${place.name}, url : ${place.url}")
+                    }
                 }
             }else{
                 //실패시 실패 처리 하는 함수 만드셔서 토스트 처리해도 되고 기획이 따로 있으면 기획에 따라가면 됩니다.

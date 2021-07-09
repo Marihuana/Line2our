@@ -2,21 +2,71 @@ package com.four.hackerton.line2our.feature.main
 
 import android.os.Bundle
 import android.util.Log
+import android.view.ScaleGestureDetector
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.four.hackerton.line2our.R
 import com.four.hackerton.line2our.feature.common.BaseActivity
+import com.four.hackerton.line2our.feature.main.sub.HomeFragment
+import com.four.hackerton.line2our.feature.main.sub.UserFragment
 import com.four.hackerton.line2our.model.network.repository.KakaoRepository
 import com.four.hackerton.line2our.model.network.repository.TestRepository
+import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity(), ScaleGestureDetector.OnScaleGestureListener {
     private val tag = MainActivity::class.java.name
-    private var repository = TestRepository()
+    var activeFragment : Fragment = HomeFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //이렇게 get 방식의 경우 query를 post 방식의 경우 parameter를 map 형태로 넣고 lamda로 Result를 받게 짜놨어요
+        supportFragmentManager.beginTransaction().apply {
+            this.replace(container.id, HomeFragment)
+            this.commitAllowingStateLoss()
+        }
+
+        bnvMain.setOnItemSelectedListener{ item ->
+            changeTab(item.itemId)
+            true
+        }
+    }
+
+    private fun changeTab(id: Int) {
+        val selected = getTabFragment(id)
+
+        if(selected == activeFragment) return
+
+        supportFragmentManager.beginTransaction().apply {
+            this.replace(container.id, selected)
+            this.commit()
+            activeFragment = selected
+        }
+    }
+
+    private fun getTabFragment(id: Int): Fragment {
+        return when(id) {
+            R.id.nav_home -> HomeFragment
+            R.id.nav_user -> UserFragment
+            else -> HomeFragment
+        }
+    }
+
+    override fun onScale(detector: ScaleGestureDetector?): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun onScaleBegin(detector: ScaleGestureDetector?): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun onScaleEnd(detector: ScaleGestureDetector?) {
+        TODO("Not yet implemented")
+    }
+
+    /*
+    //이렇게 get 방식의 경우 query를 post 방식의 경우 parameter를 map 형태로 넣고 lamda로 Result를 받게 짜놨어요
         repository.login(
             mapOf(
                 Pair("email", "test@naver.com"),
@@ -57,36 +107,5 @@ class MainActivity : BaseActivity() {
                 processError(it.exceptionOrNull())
             }
         }
-
-        //region useless codes
-        //실제로 이렇게 사용되지는 않고 대부분 Coroutine 이나 RxAndroid 와 연동해서 결과를 받아옵니다
-//        val call = repository.searchOnDaum("해커톤")
-//        call.enqueue(object : Callback<SearchResult> {
-//            override fun onResponse(call: Call<SearchResult>, response: Response<SearchResult>) {
-//                //통신 성공했을 때
-//                if(response.isSuccessful){
-//                    response.body()?.let {
-//                        for(document in it.documents){
-//                            Log.d(tag, "result (title : ${document.title}, url : ${document.url}, content : ${document.contents}")
-//                        }
-//                    }
-//                }else{
-//                    //http error
-//                    Log.e(tag, "failed to connect")
-//                }
-//
-//            }
-//
-//            override fun onFailure(call: Call<SearchResult>, t: Throwable) {
-//                //통신 실패했을 때 (보통 네트워크 관련)
-//                Log.e(tag, "onFailure", t)
-//            }
-//        })
-        //endregion
-    }
-
-
-    private fun processError(throwable : Throwable?){
-        Log.e(tag, "error", throwable)
-    }
+     */
 }

@@ -5,6 +5,7 @@ import com.four.hackerton.line2our.model.network.RetrofitClient
 import com.four.hackerton.line2our.model.network.common.BaseRepository
 import com.four.hackerton.line2our.model.network.model.KakaoResponse
 import com.four.hackerton.line2our.model.network.service.KakaoApiService
+import io.reactivex.rxjava3.core.Single
 import retrofit2.Call
 
 class KakaoRepository : BaseRepository() {
@@ -25,19 +26,19 @@ class KakaoRepository : BaseRepository() {
      */
 
 
-    fun searchPlace(keyword : String, sort : String = "accuracy", page : Int = 1, size : Int = 20, listener: (result: Result<KakaoResponse>) -> Unit){
-        ParametersBuilder().apply {
+    fun searchPlace(keyword : String, sort : String = "accuracy", page : Int = 1, size : Int = 20) : Single<KakaoResponse>{
+        return ParametersBuilder().apply {
             this.keyword = keyword
             this.sort = sort
             this.page = page
             this.size = size
         }.build().let {
-            super.performResponse(service.getPlaceList(it), listener)
+            service.getPlaceList(it)
         }
     }
 
-    fun searchPlace(query : Map<String, String>, listener: (result: Result<KakaoResponse>) -> Unit){
-        super.performResponse(service.getPlaceList(query), listener)
+    fun searchPlace(query : Map<String, String> ): Single<KakaoResponse>{
+        return service.getPlaceList(query)
     }
 
     open class ParametersBuilder{

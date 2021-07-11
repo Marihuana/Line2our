@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="515dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginStart="40dp"
+    android:layout_marginEnd="40dp"
+    android:paddingTop="35dp"
+    android:paddingBottom="30dp"
+    android:background="@drawable/img_dialog_background"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="11dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_topic_pin"
+            />
+
+        <TextView
+            android:id="@+id/tvPlace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/high_light"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:layout_marginStart="6dp"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvTopic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="6dp"
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/tvDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="7dp"
+        android:text="12명이 참여했어요"
+        android:textSize="15dp"
+        android:textColor="#4D000000"
+        android:textStyle="bold"
+    />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="29dp"
+        android:background="@drawable/img_rounded_input_background"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        >
+        <RelativeLayout
+            android:id="@+id/loSearch"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:background="@drawable/img_rounded_input"
+            >
+
+            <EditText
+                android:id="@+id/etSearch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@+id/btnDelete"
+                android:gravity="center_vertical"
+                android:background="@null"
+                android:paddingStart="20dp"
+                />
+
+            <ImageView
+                android:id="@+id/btnDelete"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="19dp"
+                />
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/loSearch"
+            tools:listitem="@layout/item_add_place"
+            />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/loResult"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="27dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tvResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="새로운 장소 발견, 등록 완료"
+            android:textSize="14dp"
+            android:textColor="#99000000"
+            />
+
+        <ImageView
+            android:id="@+id/ivResult"
+            android:layout_width="match_parent"
+            android:layout_height="185dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/img_result_fail"
+            android:adjustViewBounds="true"
+            />
+
+        <TextView
+            android:id="@+id/btnResult"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:background="@drawable/img_dialog_button"
+            android:text="다른 사람들의 추천 장소 확인"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            android:gravity="center"
+            />
+    </LinearLayout>
+
+
+
+</LinearLayout>

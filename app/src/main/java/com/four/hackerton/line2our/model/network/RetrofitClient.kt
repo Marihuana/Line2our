@@ -2,6 +2,7 @@ package com.four.hackerton.line2our.model.network
 
 import com.four.hackerton.line2our.BuildConfig
 import com.four.hackerton.line2our.global.RemoteConfig
+import com.four.hackerton.line2our.global.SharedPreferenceHelper
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -45,8 +46,12 @@ class RetrofitClient {
                         it.request().run {
                             newBuilder().apply {
                                 //token 있다면 header에 토큰 삽입하는 부분
-                                //                        if(PreferenceHelper.accessToken.isNotEmpty()) addHeader("Authorization", "Bearer ${PreferenceHelper.accessToken}")
-                                addHeader("Authorization", "KakaoAK ${BuildConfig.KKAO_API_KEY}")
+                                if(SharedPreferenceHelper.accessToken != null )
+                                    addHeader("token", "${SharedPreferenceHelper.accessToken}")
+                                if(url.host.contains("kakao")) {
+                                    removeHeader("Authorization")
+                                    addHeader("Authorization", "KakaoAK ${BuildConfig.KKAO_API_KEY}")
+                                }
                                 addHeader("Accept", "application/json")
                                 addHeader("Content-Type", "application/json")
                             }.build()
